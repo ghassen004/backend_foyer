@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@ToString(exclude = {"universite", "blocs"})
 public class Foyer {
 
     @Id

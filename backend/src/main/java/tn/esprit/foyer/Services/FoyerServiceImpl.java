@@ -39,13 +39,17 @@ public class FoyerServiceImpl implements IFoyerService {
 
     @Override
     public Foyer ajouterFoyerEtAffecterAUniversite(Foyer foyer, long idUniversite) {
-        Universite universite = universiteRepository.findById(idUniversite).orElse(null);
-        // Assigner le foyer à chaque bloc et chaque bloc au foyer
+        // FIX: orElseThrow au lieu de orElse(null) pour éviter NullPointerException
+        Universite universite = universiteRepository.findById(idUniversite)
+                .orElseThrow(() -> new RuntimeException("Université introuvable : " + idUniversite));
+
+        // Lier chaque bloc au foyer avant sauvegarde
         if (foyer.getBlocs() != null) {
             for (Bloc bloc : foyer.getBlocs()) {
                 bloc.setFoyer(foyer);
             }
         }
+
         Foyer savedFoyer = foyerRepository.save(foyer);
         universite.setFoyer(savedFoyer);
         universiteRepository.save(universite);

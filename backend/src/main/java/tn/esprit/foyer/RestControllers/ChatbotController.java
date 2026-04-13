@@ -10,14 +10,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/chatbot")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 public class ChatbotController {
 
     private static final String ANTHROPIC_URL    = "https://api.anthropic.com/v1/messages";
     // ⚠ Remplacez par votre vraie clé API Anthropic :
     private static final String ANTHROPIC_API_KEY = "VOTRE_CLE_API_ICI";
     private static final String MODEL             = "claude-sonnet-4-20250514";
-
+    private final RestTemplate restTemplate = new RestTemplate();
     private static final String SYSTEM_PROMPT =
         "Tu es un assistant IA intégré dans FoyerMS, une plateforme de gestion des foyers universitaires. " +
         "Tu aides les étudiants et administrateurs à trouver la meilleure chambre, comprendre les réservations, " +

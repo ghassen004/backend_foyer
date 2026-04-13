@@ -46,9 +46,17 @@ public class BlocServiceImpl implements IBlocService {
 
     @Override
     public Bloc affecterChambresABloc(List<Long> numChambre, String nomBloc) {
+        //  vérification null sur le bloc avant utilisation
         Bloc bloc = blocRepository.findByNomBloc(nomBloc);
+        if (bloc == null) {
+            throw new RuntimeException("Bloc introuvable avec nom : " + nomBloc);
+        }
         for (Long num : numChambre) {
+            //  vérification null sur chaque chambre avant utilisation
             Chambre chambre = chambreRepository.findByNumeroChambre(num);
+            if (chambre == null) {
+                throw new RuntimeException("Chambre introuvable avec numéro : " + num);
+            }
             chambre.setBloc(bloc);
             chambreRepository.save(chambre);
         }

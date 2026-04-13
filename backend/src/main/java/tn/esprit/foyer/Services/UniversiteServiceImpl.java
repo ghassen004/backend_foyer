@@ -38,15 +38,22 @@ public class UniversiteServiceImpl implements IUniversiteService {
 
     @Override
     public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
+        // FIX: orElseThrow pour éviter NPE si université ou foyer introuvable
         Universite u = universiteRepository.findByNomUniversite(nomUniversite);
-        Foyer f = foyerRepository.findById(idFoyer).orElse(null);
+        if (u == null) {
+            throw new RuntimeException("Université introuvable : " + nomUniversite);
+        }
+        Foyer f = foyerRepository.findById(idFoyer)
+                .orElseThrow(() -> new RuntimeException("Foyer introuvable : " + idFoyer));
         u.setFoyer(f);
         return universiteRepository.save(u);
     }
 
     @Override
     public Universite desaffecterFoyerAUniversite(long idUniversite) {
-        Universite u = universiteRepository.findById(idUniversite).orElse(null);
+        // orElseThrow pour éviter NPE si université introuvable
+        Universite u = universiteRepository.findById(idUniversite)
+                .orElseThrow(() -> new RuntimeException("Université introuvable : " + idUniversite));
         u.setFoyer(null);
         return universiteRepository.save(u);
     }

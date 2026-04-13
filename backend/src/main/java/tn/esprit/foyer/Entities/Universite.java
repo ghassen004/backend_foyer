@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@ToString(exclude = "foyer")
 public class Universite {
 
     @Id

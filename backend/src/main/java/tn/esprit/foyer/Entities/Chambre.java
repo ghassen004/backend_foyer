@@ -1,6 +1,6 @@
 package tn.esprit.foyer.Entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@ToString(exclude = {"bloc", "reservations"})
 public class Chambre {
 
     @Id
@@ -23,7 +24,7 @@ public class Chambre {
     private TypeChambre typeC;
 
     @ManyToOne
-    @JsonBackReference("bloc-chambres")
+    @JsonIgnoreProperties({"chambres", "foyer"})  // évite la récursion bloc→chambres→bloc
     private Bloc bloc;
 
     @OneToMany(mappedBy = "chambre", fetch = FetchType.EAGER)

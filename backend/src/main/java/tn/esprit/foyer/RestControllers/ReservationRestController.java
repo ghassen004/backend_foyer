@@ -6,14 +6,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.foyer.Entities.Reservation;
 import tn.esprit.foyer.Services.IReservationService;
-
+import org.springframework.web.bind.annotation.RequestMethod;
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/reservation")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001", methods = {
+        RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.DELETE, RequestMethod.OPTIONS
+})
 public class ReservationRestController {
 
     IReservationService reservationService;

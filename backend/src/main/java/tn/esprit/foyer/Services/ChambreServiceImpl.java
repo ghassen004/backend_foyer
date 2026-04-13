@@ -42,20 +42,20 @@ public class ChambreServiceImpl implements IChambreService {
 
     @Override
     public long nbChambreParTypeEtBloc(TypeChambre type, long idBloc) {
-        return chambreRepository.countByChambreTypeAndBlocIdBloc(type, idBloc);
-    }
+        return chambreRepository.countByTypeCAndBlocIdBloc(type, idBloc);    }
 
     @Override
     public List<Chambre> getChambresNonReserveParNomFoyerEtTypeChambre(String nomFoyer, TypeChambre type) {
+        // calcul direct de l'année universitaire
+        int year = LocalDate.now().getYear();
         LocalDate dateDebutAU;
         LocalDate dateFinAU;
-        int year = LocalDate.now().getYear() % 100;
         if (LocalDate.now().getMonthValue() <= 7) {
-            dateDebutAU = LocalDate.of(Integer.parseInt("20" + (year - 1)), 9, 15);
-            dateFinAU   = LocalDate.of(Integer.parseInt("20" + year), 6, 30);
+            dateDebutAU = LocalDate.of(year - 1, 9, 15);
+            dateFinAU   = LocalDate.of(year, 6, 30);
         } else {
-            dateDebutAU = LocalDate.of(Integer.parseInt("20" + year), 9, 15);
-            dateFinAU   = LocalDate.of(Integer.parseInt("20" + (year + 1)), 6, 30);
+            dateDebutAU = LocalDate.of(year, 9, 15);
+            dateFinAU   = LocalDate.of(year + 1, 6, 30);
         }
         return chambreRepository.getChambresNonReserveParNomFoyerEtTypeChambre(nomFoyer, type, dateDebutAU, dateFinAU);
     }

@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/universite")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 public class UniversiteRestController {
 
     IUniversiteService universiteService;
